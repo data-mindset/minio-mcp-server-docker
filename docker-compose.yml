@@ -7,6 +7,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8090:8090"
+    volumes:
+      # Mount local directories for file operations
+      - ./downloads:/tmp/downloads
+      - ./uploads:/tmp/uploads
     environment:
       - MINIO_ENDPOINT=${MINIO_ENDPOINT}
       - MINIO_PORT=${MINIO_PORT:-443}

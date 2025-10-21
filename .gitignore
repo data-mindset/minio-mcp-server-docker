@@ -21,3 +21,7 @@ temp/
 
 # Docker
 docker-compose.override.yml
+
+# Local file storage directories
+downloads/
+uploads/
