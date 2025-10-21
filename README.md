@@ -112,8 +112,35 @@ This deployment includes the following flags:
 - `--http`: Enable StreamableHTTP transport
 - `--http-port 8090`: Listen on port 8090
 - `--allow-write`: Enable write operations (create buckets, upload objects, etc.)
+- `--allowed-directories`: Restrict file operations to specific directories (security feature)
 
 To modify flags, edit the `CMD` line in `Dockerfile`.
+
+### Allowed Directories
+
+The MCP server uses the `--allowed-directories` flag to restrict which local directories can be used for file operations (like downloading objects from MinIO or uploading local files).
+
+**Current Configuration:**
+- `/tmp/downloads` - For downloading objects from MinIO
+- `/tmp/uploads` - For uploading files to MinIO
+
+**For Local Development:**
+
+When running locally with `docker-compose`, these directories are mapped to:
+- `./downloads` - Files downloaded from MinIO will appear here
+- `./uploads` - Place files here to upload to MinIO
+
+**For Render Deployment:**
+
+Render uses ephemeral storage, so files in `/tmp/downloads` and `/tmp/uploads` will only persist during the container's lifetime. For production use with persistent storage, you would need to:
+
+1. Add a Render disk volume to your service
+2. Update the Dockerfile to use the mounted disk path instead of `/tmp`
+
+**Example MCP Commands:**
+- "Download file.pdf from bucket mybucket to downloads directory"
+- "Upload document.txt from uploads directory to bucket mybucket"
+- "List files in the downloads directory"
 
 ## Using with MCP Clients
 
